@@ -1,40 +1,52 @@
-// client/src/lib/security.js
+// --> [Core Cryptography] || client/src/lib/security.js
 import CryptoJS from 'crypto-js';
 
-const SECURE_STORAGE_KEY = 'chat_sess';
-
-export const SessionManager = {
-  createSession: (userData, token) => {
-    const sessionKey = CryptoJS.lib.WordArray.random(256/8).toString();
-    const encryptedData = CryptoJS.AES.encrypt(
-      JSON.stringify({
-        user: userData,
-        token,
-        expires: Date.now() + 3600 * 1000 // 1 hour
-      }),
-      sessionKey
-    ).toString();
+export const Security = {
+  // AES-256-CBC Encryption with HMAC
+  encrypt: (plaintext, key) => {
+    const iv = CryptoJS.lib.WordArray.random(128/8);
+    const cipher = CryptoJS.AES.encrypt(plaintext, key, {
+      iv: iv,
+      mode: CryptoJS.mode.CBC,
+      padding: CryptoJS.pad.Pkcs7
+    });
     
-    localStorage.setItem(SECURE_STORAGE_KEY, encryptedData);
-    return sessionKey;
+    const hmac = CryptoJS.HmacSHA256(cipher.toString(), key);
+    return {
+      iv: iv.toString(),
+      ciphertext: cipher.toString(),
+      hmac: hmac.toString()
+    };
   },
 
-  getSession: (sessionKey) => {
-    const encryptedData = localStorage.getItem(SECURE_STORAGE_KEY);
-    if(!encryptedData) return null;
-    
-    try {
-      const bytes = CryptoJS.AES.decrypt(encryptedData, sessionKey);
-      const data = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-      if(data.expires < Date.now()) throw new Error('Session expired');
-      return data;
-    } catch (error) {
-      this.clearSession();
-      return null;
+  decrypt: (encrypted, key) => {
+    const hmac = CryptoJS.HmacSHA256(encrypted.ciphertext, key);
+    if(hmac.toString() !== encrypted.hmac) {
+      throw new Error('HMAC validation failed');
     }
+    
+    const decipher = CryptoJS.AES.decrypt(encrypted.ciphertext, key, {
+      iv: CryptoJS.enc.Hex.parse(encrypted.iv),
+      mode: CryptoJS.mode.CBC,
+      padding: CryptoJS.pad.Pkcs7
+    });
+    
+    return decipher.toString(CryptoJS.enc.Utf8);
   },
 
-  clearSession: () => {
-    localStorage.removeItem(SECURE_STORAGE_KEY);
+  deriveKey: (password, salt) => {
+    return CryptoJS.PBKDF2(password, salt, {
+      keySize: 256/32,
+      iterations: 100000,
+      hasher: CryptoJS.algo.SHA512
+    });
+  },
+
+  generateSessionKey: () => {
+    return CryptoJS.lib.WordArray.random(256/8).toString();
+  },
+
+  hashData: (data) => {
+    return CryptoJS.SHA3(data, { outputLength: 512 }).toString();
   }
 };
