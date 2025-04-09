@@ -1,0 +1,16 @@
+# Security Scan Policy
+scanners:
+  vuln:
+    severity: CRITICAL,HIGH
+    ignore-unfixed: true
+  secret:
+    enable: true
+
+# Custom Ignore Rules
+ignore-policies:
+  - vulnerability: CVE-2020-1234
+    expires: 2025-12-31
+    reason: "Mitigated via runtime protection"
+  - vulnerability: CVE-2021-5678
+    expires: never
+    reason: "False positive in our setup"
