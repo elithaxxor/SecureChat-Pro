@@ -1,4 +1,4 @@
-// pre loaded public keys 
+// --> [Certificate Pinning File] pre loaded public keys --
 export const ENCRYPTION_KEYS = {
   INITIAL_KEY: `-----BEGIN PUBLIC KEY-----
 MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAE5rHZ3l6NR5WljzeR5RxJjG56Yb6YSjQZ
