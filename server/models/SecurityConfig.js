@@ -1,3 +1,5 @@
+// Security Audit Model 
+
 import mongoose from 'mongoose';
 
 const SecurityConfigSchema = new mongoose.Schema({
