@@ -1,3 +1,6 @@
+// WebRTC Session Model (models/WebRTCSession.js)
+
+
 import mongoose from 'mongoose';
 
 const WebRTCSchema = new mongoose.Schema({
