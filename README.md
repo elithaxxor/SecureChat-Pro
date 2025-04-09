@@ -185,21 +185,13 @@ gantt
 
 ---
 
-## 📜 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
 <div align="center">
   🔧 Built with ❤️ by [Your Name] | 
   📨 [Contact Support](mailto:support@example.com) | 
   🐛 [Report Issue](https://github.com/your-username/react-chat-video-app/issues)
 </div>
 ```
-
-
-# 💬📹 Secure Chat & Video Platform
+# 💬📹 Secure Chat & Video Platform (changelog)
 
 <div align="center">
 
