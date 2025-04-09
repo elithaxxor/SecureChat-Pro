@@ -1,5 +1,5 @@
 {
-  "name": "chat-server",
+  "name": "server",
   "version": "1.0.0",
   "description": "Node.js backend for React Chat and Video Call Application with Socket.io and MongoDB",
   "main": "index.js",
@@ -17,6 +17,6 @@
   "devDependencies": {
     "nodemon": "^3.1.0"
   },
-  "author": "Your Name",
-  "license": "MIT"
+  "author": "nobody",
+  "license": "copyleft"
 }
