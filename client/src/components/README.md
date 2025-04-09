@@ -171,16 +171,24 @@ To ensure a good user experience, customize the styles for these components in y
   cursor: pointer;
 }
 ```
-
-## License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
-## Acknowledgments
-
-- React.js
-- Socket.io
-- Simple Peer
+Change Log
 ```
+Security Features Implemented:
 
-You can use this content to create a `README.md` file for the `client/src/components` directory in your GitHub repository.
+Client-Side Encryption
+AES-256 encryption before message transmission
+Key derivation with PBKDF2
+IV generation per message
+Secure Session Handling
+JWT token storage in encrypted localStorage
+Automatic token refresh
+Session invalidation on logout
+WebRTC Security
+STUN/TURN server configuration
+Media stream permissions
+Peer connection encryption
+Input Validation
+Composition event handling
+Empty message prevention
+XSS protection through React's DOM sanitization
+
