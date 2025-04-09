@@ -154,25 +154,12 @@ npm run start:secure
 
 ---
 
-## 📄 License
 
 **SecureChat Pro** released under [AGPLv3 with Security Exception](LICENSE)  
 
 [![License](https://img.shields.io/badge/License-AGPL_v3_With_Security_Exception-red.svg)](https://opensource.org/license/agpl-v3/)
 
 ```
-
-This README uses:
-- Security-themed emojis 🛡️🔒
-- Visual badges for quick scanning
-- Mermaid diagram for security flow
-- Clear section separation
-- Interactive-looking code blocks
-- Compliance status indicators
-- Security-first language
-
-Would you like me to add any specific security documentation links or expand any particular section?
-
 # 💬📹 Real-Time Chat & Video Call Suite v2.1.1 (encyrption + db archive) 
 
 <div align="center">
