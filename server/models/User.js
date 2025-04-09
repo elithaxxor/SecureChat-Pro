@@ -1,3 +1,4 @@
+//  [User Model]
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import { Security } from '../lib/security';
