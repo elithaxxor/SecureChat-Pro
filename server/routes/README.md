@@ -1,5 +1,6 @@
-Key Features:
+# Key Features:
 
+```markdown
 Security First
 JWT authentication on all endpoints
 Rate-limited authentication endpoints
@@ -26,3 +27,11 @@ To use these routes:
 Create a routes directory in your server
 Add these files with proper imports
 Mount them in your main server file:
+
+
+```bash
+// server/index.js
+app.use('/auth', require('./routes/auth'));
+app.use('/messages', require('./routes/messages'));
+app.use('/webrtc', require('./routes/webrtc'));
+```
