@@ -1,4 +1,4 @@
-//--->  (Secure Session Management) client/src/hooks/useSession.js
+//  [Secure Session Management] --> client/src/hooks/useSession.js
 import { useState, useEffect } from 'react';
 import CryptoJS from 'crypto-js';
 import { useAuth } from '../stores/authStore';
