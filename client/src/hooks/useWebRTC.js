@@ -2,54 +2,79 @@
   Media Negotiation Hook
 */
 
-import { useRef, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Peer from 'simple-peer';
+import { useSocket } from '../stores/socketStore';
 
-const useWebRTC = (socket, sessionKey) => {
-  const peers = useRef({});
+export const useWebRTC = (callId) => {
+  const [peerConnection, setPeerConnection] = useState(null);
+  const [callState, setCallState] = useState('idle');
+  const { socket } = useSocket();
+  const localStreamRef = useRef();
 
-  const createPeer = (targetId, initiator = true) => {
-    const peer = new Peer({
+  const initializeMedia = async () => {
+    return navigator.mediaDevices.getUserMedia({
+      video: { width: 1280, height: 720 },
+      audio: { noiseSuppression: true, echoCancellation: true }
+    });
+  };
+
+  const createPeer = (initiator = false) => {
+    return new Peer({
       initiator,
       trickle: false,
-      config: {
-        iceServers: [
-          { 
-            urls: process.env.VITE_ICE_SERVERS.split(',') 
-          }
-        ]
-      }
+      stream: localStreamRef.current,
+      config: { iceServers: getIceServers() }
     });
+  };
 
-    peer.on('signal', (data) => {
-      socket.emit('signal', {
-        target: targetId,
-        signal: JSON.stringify(data)
+  const startCall = async (targetUserId) => {
+    try {
+      const stream = await initializeMedia();
+      localStreamRef.current = stream;
+      
+      const peer = createPeer(true);
+      setPeerConnection(peer);
+      setCallState('connecting');
+
+      peer.on('signal', data => {
+        socket.emit('rtc-signal', {
+          target: targetUserId,
+          callId,
+          signal: JSON.stringify(data)
+        });
       });
-    });
 
-    peers.current[targetId] = peer;
-    return peer;
+      peer.on('connect', () => setCallState('active'));
+      peer.on('error', () => setCallState('failed'));
+      
+    } catch (error) {
+      setCallState('error');
+    }
+  };
+
+  const handleSignal = (signalData) => {
+    if(peerConnection) {
+      peerConnection.signal(JSON.parse(signalData));
+    } else {
+      const peer = createPeer(false);
+      setPeerConnection(peer);
+      
+      peer.signal(signalData);
+      peer.on('stream', handleRemoteStream);
+    }
   };
 
   useEffect(() => {
-    const handleSignal = ({ from, signal }) => {
-      const signalData = JSON.parse(signal);
-      const peer = peers.current[from] || createPeer(from, false);
-      
-      if(!peer.destroyed) {
-        peer.signal(signalData);
-      }
-    };
+    if(socket) {
+      socket.on('rtc-signal', ({ signal }) => handleSignal(signal));
+    }
 
-    socket.on('signal', handleSignal);
     return () => {
-      socket.off('signal', handleSignal);
-      Object.values(peers.current).forEach(peer => peer.destroy());
+      peerConnection?.destroy();
+      localStreamRef.current?.getTracks().forEach(track => track.stop());
     };
-  }, [sessionKey]);
+  }, [socket]);
 
-  return { createPeer };
+  return { startCall, endCall, callState, localStream: localStreamRef.current };
 };
-
-export default useWebRTC;
