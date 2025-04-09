@@ -1,0 +1,25 @@
+.App {
+  font-family: Arial, sans-serif;
+  padding: 10px;
+}
+
+.chat-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 10px;
+}
+
+.chat-messages {
+  height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.video-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
