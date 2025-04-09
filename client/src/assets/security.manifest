@@ -1,0 +1,19 @@
+{
+  "security-policies": {
+    "default-src": ["'self'"],
+    "connect-src": [
+      "https://api.securechat.com",
+      "wss://signal.securechat.com"
+    ],
+    "script-src": [
+      "'sha256-5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b='",
+      "'strict-dynamic'"
+    ],
+    "require-trusted-types-for": ["script"]
+  },
+  "permissions-policy": {
+    "encrypted-media": "self",
+    "usb": "none",
+    "geolocation": "none"
+  }
+}
