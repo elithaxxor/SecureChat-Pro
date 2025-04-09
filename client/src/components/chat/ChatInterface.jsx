@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useChat } from '../../contexts/ChatContext';
 import { useEncryption } from '../../hooks/useEncryption';
 
+
 export const ChatInterface = ({ chatId }) => {
   const { messages, sendMessage } = useChat();
   const { decrypt } = useEncryption();
