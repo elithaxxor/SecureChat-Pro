@@ -1,45 +1,47 @@
-/* server/models/Message.js
-
-Model for db 
-
-*/ 
-
 import mongoose from 'mongoose';
 
-const schema = new mongoose.Schema({
-  sessionId: {
-    type: String,
-    index: true,
-    required: true
+const MessageSchema = new mongoose.Schema({
+  content: {
+    ciphertext: {
+      type: String,
+      required: true
+    },
+    iv: {
+      type: String,
+      required: true
+    },
+    hmac: {
+      type: String,
+      required: true
+    },
+    encryptionVersion: {
+      type: String,
+      default: 'AES-256-GCM'
+    }
   },
-  encryptedContent: {
-    type: String,
-    required: true
-  },
-  iv: {
-    type: String,
-    required: true
-  },
-  participants: [{
+  sender: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    required: true
+  },
+  recipients: [{
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    readAt: Date,
+    decryptionKey: {
+      type: String,
+      select: false
+    }
   }],
   metadata: {
-    sentAt: {
-      type: Date,
-      default: Date.now
-    },
-    deliveredAt: Date,
-    readAt: Date
+    deviceFingerprint: String,
+    locationHash: String
   }
-}, {
-  timestamps: true,
-  autoIndex: process.env.NODE_ENV === 'development'
-});
+}, { timestamps: true });
 
-schema.index({ 
-  participants: 1, 
-  'metadata.sentAt': -1 
-});
+// TTL index for automatic deletion
+MessageSchema.index({ createdAt: 1 }, { expireAfterSeconds: 2592000 }); // 30 days
 
-export default mongoose.model('Message', schema);
+export default mongoose.model('Message', MessageSchema);
