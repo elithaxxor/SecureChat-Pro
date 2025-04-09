@@ -1,35 +1,31 @@
-/* server/middleware/auth.js
-
-Enhanced Auth Service (JWT Implementation)
-*/
-
 import jwt from 'jsonwebtoken';
+import { Security } from '../utils/cryptoEngine';
 
-const authenticate = (roles = []) => async (req, res, next) => {
+export const verifyToken = (req, res, next) => {
   const token = req.headers.authorization?.split(' ')[1];
-  
+  if (!token) return res.status(403).send('No token provided');
+
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(
+      Security.decryptToken(token),
+      process.env.JWT_SECRET
+    );
     
-    // RBAC Check
-    if(roles.length && !roles.includes(decoded.role)) {
-      return res.status(403).json({ 
-        error: 'Insufficient privileges' 
-      });
-    }
-    
-    req.user = {
-      id: decoded.sub,
-      role: decoded.role,
-      session: decoded.session
-    };
+    req.userId = decoded.userId;
+    req.sessionKey = decoded.sessionKey;
     next();
   } catch (error) {
-    res.status(401).json({ 
-      error: 'Invalid or expired token',
-      code: 'AUTH_REQUIRED' 
-    });
+    res.status(401).send('Invalid token');
   }
 };
 
-export { authenticate };
+export const checkSession = async (req, res, next) => {
+  const sessionHash = Security.hashData(req.sessionKey);
+  const validSession = await SessionManager.validateSession(
+    req.userId, 
+    sessionHash
+  );
+  
+  if (!validSession) return res.status(401).send('Session expired');
+  next();
+};
