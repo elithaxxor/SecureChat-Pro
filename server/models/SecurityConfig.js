@@ -1,4 +1,4 @@
-// Security Audit Model 
+// [Security Config Model] 
 
 import mongoose from 'mongoose';
 
