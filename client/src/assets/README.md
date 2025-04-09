@@ -28,3 +28,17 @@ TURN relay enforcement
 DTLS certificate management
 To generate these security assets, you would typically use commands like:
 ```
+
+### To generate these security assets, you would typically use commands like:
+
+```bash
+# Generate ECC private key
+openssl ecparam -name prime256v1 -genkey -noout -out ec-private.pem
+
+# Extract public key 
+openssl ec -in ec-private.pem -pubout -out ec-public.pem
+
+# Generate certificate fingerprint
+openssl x509 -in cert.pem -pubkey | openssl pkey -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64
+```
+
