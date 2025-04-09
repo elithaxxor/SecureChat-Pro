@@ -1,4 +1,4 @@
-// --> [Security Configuration] || client/src/contexts/ConfigContext.js
+// --->[Security Configuration] client/src/contexts/ConfigContext.js
 
 import { createContext, useContext, useState, useEffect } from 'react';
 import { Security } from '../lib/security';
