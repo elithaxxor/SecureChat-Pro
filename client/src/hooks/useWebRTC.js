@@ -1,7 +1,7 @@
 /* client/src/hooks/useWebRTC.js
   Media Negotiation Hook
 */
-
+// client/src/hooks/useWebRTC.js
 import { useState, useEffect, useRef } from 'react';
 import Peer from 'simple-peer';
 import { useSocket } from '../stores/socketStore';
@@ -78,3 +78,4 @@ export const useWebRTC = (callId) => {
 
   return { startCall, endCall, callState, localStream: localStreamRef.current };
 };
+
