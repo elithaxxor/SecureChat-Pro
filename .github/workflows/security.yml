@@ -1,0 +1,20 @@
+name: Security Checks
+on: [push, pull_request]
+
+jobs:
+  container-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: anchore/scan-action@v3
+        with:
+          image: 'securechat-app:latest'
+          fail-build: true
+          severity: 'critical,high'
+  
+  secrets-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: gitguardian/ggshield-action@main
+        with:
+          mode: commit-range
+          exit_zero: false
