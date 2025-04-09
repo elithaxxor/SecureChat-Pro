@@ -1,4 +1,9 @@
-// server/models/Message.js
+/* server/models/Message.js
+
+Model for db 
+
+*/ 
+
 import mongoose from 'mongoose';
 
 const schema = new mongoose.Schema({
