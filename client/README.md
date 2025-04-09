@@ -44,6 +44,7 @@ Delploy:
 ```
 Key Features:
 
+```markdown
 Security-First Dependencies
 Client: CryptoJS for encryption, React Router for protected routes
 Server: Helmet, rate-limiting, JWT, and bcrypt
@@ -60,4 +61,4 @@ Testing setup (Jest/Supertest)
 Runtime Requirements
 Node.js 20+ for modern features
 npm 9+ for workspace support
-
+```
