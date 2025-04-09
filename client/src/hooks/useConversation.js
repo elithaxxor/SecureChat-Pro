@@ -1,4 +1,4 @@
-// client/src/hooks/useConversation.js
+// --> [Encrypted Message Handling] client/src/hooks/useConversation.js
 import { useState, useEffect } from 'react';
 import { useEncryption } from './useEncryption';
 import api from '../api';
