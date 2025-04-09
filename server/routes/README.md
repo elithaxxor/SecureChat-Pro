@@ -35,3 +35,35 @@ app.use('/auth', require('./routes/auth'));
 app.use('/messages', require('./routes/messages'));
 app.use('/webrtc', require('./routes/webrtc'));
 ```
+
+changelog v2
+
+```
+## Changelog: 
+Key Security Features:
+```markdown
+End-to-End Encryption
+Session-key encrypted payloads
+Per-message HMAC validation
+Forward-secure key exchange
+Authentication
+Double-encrypted JWT tokens
+Session binding to client fingerprints
+Strict ownership verification
+Data Integrity
+Cryptographic hash IDs
+Signal message validation
+Secure shredding of deleted data
+Privacy Compliance
+GDPR right-to-erasure implementation
+Encrypted data exports
+Pseudonymous identifiers
+Attack Prevention
+Parameter validation
+Ownership checks
+Timing attack protection
+Secure Signaling
+DTLS fingerprint verification
+Encrypted ICE candidates
+Session state validation
+
