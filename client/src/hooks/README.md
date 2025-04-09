@@ -17,6 +17,7 @@ npm install jsonwebtoken socket.io simple-peer crypto-js mongoose bcryptjs
 ## Change log
 Added Security Features:
 
+```markdown
 End-to-End Encryption
 AES-256-CBC with HMAC-SHA256 message authentication
 Client-side key derivation (PBKDF2 with 10k iterations)
@@ -37,3 +38,4 @@ Error Handling
 Graceful crypto operation failures
 Secure error logging
 Automatic session invalidation
+```
