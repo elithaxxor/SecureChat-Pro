@@ -1,4 +1,6 @@
-/* client/src/hooks/useWebRTC.js */
+/* client/src/hooks/useWebRTC.js
+  Media Negotiation Hook
+*/
 
 import { useRef, useEffect } from 'react';
 import Peer from 'simple-peer';
