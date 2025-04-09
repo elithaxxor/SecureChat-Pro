@@ -1,0 +1,14 @@
+{
+  "production": [
+    {
+      "sha256": "A9:4A:97:0E:DE:26:4F:79:44:70:05:21:3D:25:9C:33:AD:80:7D:9F:CE:7B:03:2D:23:63:BB:4A:2D:6C:45:8F",
+      "publicKey": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEyB+7W0eAh0V/yDVIXhq5dcYHklN7jY3Ea1c3w3JvfvC4v3zK8u9xH1ZL3yVfJ3q8kKlNqFqMJZUs3x5zDzw=="
+    }
+  ],
+  "development": [
+    {
+      "sha256": "BB:FD:0A:10:0E:D1:9C:CF:0B:FA:6A:FE:62:58:82:43:4D:9F:80:DB:DC:E3:43:4F:A2:2B:73:67:4B:4A:73:38",
+      "publicKey": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAExf7hW13Y6Vpfd9XbDfGQ3UJkloNLVC8eLjFR3M4+XavP2kQYH0xJ3yyEM8NlqyhLqWJdvV3z7D2l4mR3FmDk5Q=="
+    }
+  ]
+}
