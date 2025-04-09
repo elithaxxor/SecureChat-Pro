@@ -3,6 +3,26 @@ import { ErrorHandler } from '../utils/securityLogger';
 
 export const encryptResponse = (req, res, next) => {
   const originalSend = res.send;
+  res.send = async (data) => {
+    try {
+      const encrypted = await CryptoEngine.encrypt(
+        JSON.stringify(data),
+        req.session.key
+      );
+      res.set('Content-Security', 'encrypted=true; version=2025a');
+      originalSend.call(res, encrypted);
+    } catch (error) {
+      SecurityLogger.log('ENCRYPT_FAIL', error);
+      next(new SecurityError('RESPONSE_FAILURE'));
+    }
+  };
+  next();
+};
+
+
+/*
+export const encryptResponse = (req, res, next) => {
+  const originalSend = res.send;
   res.send = (data) => {
     try {
       const encrypted = Security.encryptPayload(
@@ -29,4 +49,4 @@ export const decryptRequest = (req, res, next) => {
     ErrorHandler.logCryptoFailure(error);
     res.status(400).send('Invalid encrypted payload');
   }
-};
+};*/
